@@ -1,6 +1,9 @@
 from django import forms
 from .models import  Item
-from django.forms.widgets import CheckboxInput
+from django.forms.widgets import CheckboxInput, DateInput
+from django.forms.widgets import DateInput
+from django.utils.safestring import mark_safe
+from django.forms.utils import flatatt
 
 
 
@@ -8,6 +11,9 @@ from django.forms.widgets import CheckboxInput
 INPUT_CLASSES = "py-4 px-8 rounded-2xl border"
 INPUT_CLASSES_1 = "w-32 py-4 px-8 rounded-2xl border flex inline-block"
 CHECKBOX_CLASSES = "w-32 py-4 px-8 rounded-2xl border flex inline-block bg-green-500"
+DATE_CLASS = "date date-picker input-group date input-group-append display-inline flex justify-center bg-green-400 rounded-xl font-bold text-white"
+IMAGE_CLASS = "display-inline bg-green-500 text-white font-bold rounded-2xl border no-border"
+
 
 
 class PoolBooleanWidget(CheckboxInput):
@@ -23,10 +29,11 @@ class ParkingBooleanWidget(CheckboxInput):
 
 
 
+
 class EditItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ('name', 'description', 'price', 'images', 'destinations', 'pool', 'food', 'parking', 'bedrooms', 'bathrooms', 'persons', 'places', 'restaurants', 'vacations', 'activities', 'trip')
+        fields = ('name', 'description', 'price', 'persons', 'bedrooms', 'bathrooms', 'destinations', 'food', 'parking', 'places', 'restaurants', 'vacations', 'activities', 'trip', 'start_date', 'end_date', 'images')
         widgets = {
             'name': forms.TextInput(attrs={
             'class': INPUT_CLASSES
@@ -36,6 +43,17 @@ class EditItemForm(forms.ModelForm):
             }),
             'price': forms.TextInput(attrs={
             'class': INPUT_CLASSES
+            }),
+            'start_date': DateInput(attrs={
+                'type': 'date',
+                'class': DATE_CLASS,
+                'id': 'datetimepicker1',
+                'data-target': '#datetimepicker1',
+                'date': 'dd/mm/yyyy'
+            }),
+            'end_date': DateInput(attrs={
+                'type': 'date',
+                'class': DATE_CLASS
             }),
             'pool': PoolBooleanWidget(),
             'places': FoodBooleanWidget(),
@@ -57,7 +75,10 @@ class EditItemForm(forms.ModelForm):
             'destinations': forms.TextInput(attrs={
             'class': INPUT_CLASSES
             }),
-            'images': forms.FileInput(attrs={})
+            'images': forms.FileInput(attrs={
+                'multiple': False,              # Allow multiple file selection (if desired)
+                'class': IMAGE_CLASS
+            })
         }
 
 
@@ -75,9 +96,9 @@ class FoodBooleanWidget(CheckboxInput):
     input_type = 'checkbox'
     attrs = {'class': CHECKBOX_CLASSES}
 
-
 class ParkingBooleanWidget(CheckboxInput):
     input_type = 'checkbox'
+
 
 
 
@@ -85,7 +106,7 @@ class ParkingBooleanWidget(CheckboxInput):
 class NewItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ('name', 'description', 'price', 'images', 'destinations', 'pool', 'food', 'parking', 'bedrooms', 'bathrooms', 'persons', 'places', 'restaurants', 'vacations', 'activities', 'trip')
+        fields = ('name', 'description', 'price', 'persons', 'bedrooms', 'bathrooms', 'destinations', 'food', 'parking', 'places', 'restaurants', 'vacations', 'activities', 'trip', 'start_date', 'end_date', 'images')
         widgets = {
             'name': forms.TextInput(attrs={
             'class': INPUT_CLASSES
@@ -95,6 +116,17 @@ class NewItemForm(forms.ModelForm):
             }),
             'price': forms.TextInput(attrs={
             'class': INPUT_CLASSES
+            }),
+            'start_date': DateInput(attrs={
+                'type': 'date',
+                'class': DATE_CLASS,
+                'id': 'datetimepicker1',
+                'data-target': '#datetimepicker1',
+                'date': 'dd/mm/yyyy'
+            }),
+            'end_date': DateInput(attrs={
+                'type': 'date',
+                'class': DATE_CLASS
             }),
             'pool': PoolBooleanWidget(),
             'places': FoodBooleanWidget(),
@@ -116,5 +148,8 @@ class NewItemForm(forms.ModelForm):
             'destinations': forms.TextInput(attrs={
             'class': INPUT_CLASSES
             }),
-            'images': forms.FileInput(attrs={})
+            'images': forms.FileInput(attrs={
+                'multiple': False,              # Allow multiple file selection (if desired)
+                'class': IMAGE_CLASS
+            })
         }

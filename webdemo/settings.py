@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-pmbrs5ob$fmxu0jm%dyx1drxu2_fk*9#9y%pa-!(cu*@@ck$b7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ["*"]
 
 
 LOGIN_URL = '/login/'
@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     "main",
     "item",
     "dashboard",
-    "conversation",
     "daphne",
+    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -77,7 +77,8 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = "webdemo.asgi.application"
+ASGI_APPLICATION = 'webdemo.asgi.application'
+
 
 
 # Database

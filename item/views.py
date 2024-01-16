@@ -54,6 +54,7 @@ def new(request):
     })
 
 
+
 @login_required
 def edit(request, pk):
     item = get_object_or_404(Item, pk=pk, published_by=request.user)
